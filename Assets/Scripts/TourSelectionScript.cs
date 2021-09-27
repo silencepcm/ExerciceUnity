@@ -4,9 +4,25 @@ using UnityEngine;
 
 public class TourSelectionScript : MonoBehaviour
 {
+    private bool collided;
+    private void Start()
+    {
+        collided = false;
+    }
     private void OnMouseDown()
     {
-        Debug.Log(transform.position);
-        Debug.Log(Input.mousePosition);
+        collided = !collided;
+    }
+
+    private void Update()
+    {
+        if (collided)
+        {
+            Vector3 mouse = Input.mousePosition;
+            Ray castPoint = Camera.main.ScreenPointToRay(mouse);
+            Vector3 target = castPoint.origin;
+            target.z = transform.position.z;
+            transform.position = target;
+        }
     }
 }
